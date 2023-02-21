@@ -1,0 +1,143 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[utf8]{inputenc}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\hypersetup{
+	colorlinks,
+	linkcolor={black!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+% Format code snippets
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+% Figures and images related
+\usepackage{graphicx}
+\usepackage{float}
+
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\newcommand{\displayMetaInformation}{
+	\pagestyle{fancy}
+	\fancyhf{}
+	\rfoot{\thepage}
+	\rhead{\tiny 23. April, 2021}
+	\lhead{Martin Hansen \\ \tiny Tlf: 31165870 \\ Adr.: Hyben Alle 56 1.MF, 2770}
+}
+
+\newcommand{\centeredHeadline}[1]{\begin{center}\large #1\end{center}}
+
+\newcommand{\nextPage}[1]{\textit{(#1...)} \pagebreak}
+
+\newcommand{\fig}[3]{\begin{figure}[H]
+		\centering
+		\includegraphics[width=#2]{#1}
+		\caption{#3}
+		\label{fig:#1}
+\end{figure}}
+
+\newcommand{\frontFig}[2]{\begin{figure}[H]
+		\centering
+		\includegraphics[width=#2]{#1}
+		\label{fig:#1}
+\end{figure}}
+
+\setlength{\parindent}{0cm}
+
+\author{Martin Hansen}
+\title{Programming notes and snippets 2023}
+
+\newcommand{\note}{\textbf{Note:} }
+
+\begin{document}
+	
+	\frenchspacing
+	\maketitle
+	
+	\pagebreak
+	
+	\centeredHeadline{Worth to know}
+	
+	This guide assumes the reader holds a fundemental knowledge of linux and bash shell.  
+	
+	\pagebreak
+	
+	\tableofcontents
+	
+	\pagebreak
+	
+	\section{MySQL}
+	
+	\section{Vagrant}
+	
+	\section{Docker}
+	
+	\subsection{Basic  operations}
+	Show running containers:
+	
+	\begin{lstlisting}
+		docker ps
+	\end{lstlisting}
+	
+	List images:
+	
+	\begin{lstlisting}
+		docker image ls
+		docker images
+		docker images -a
+		docker images -q
+	\end{lstlisting}
+
+	\note{} The 'a' and 'q' arguments are used to list all images and only their ids, respectively.\\
+	
+	Remove all images:
+	
+	\begin{lstlisting}
+		docker rm $(docker images -a -q)
+	\end{lstlisting}
+
+	Remove all containers:
+	
+	\begin{lstlisting}
+		docker rm $(docker container ls -a -q)
+	\end{lstlisting}
+
+	\subsection{Official MySQL image}
+	
+	Retrieve image from dockerhub:
+	
+	\begin{lstlisting}
+		docker pull mysql/mysql-server:{version [mostly use 'latest' or ommit value to use latest version]}
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+		docker run -p {host port}:{container port} --name {container name}  -d mysql/mysql-server:tag
+	\end{lstlisting}
+	
+	Enter mysql interface:
+	\begin{lstlisting}
+		docker exec -it {container name} mysql -uroot -p
+	\end{lstlisting}
+
+	\subsection{Alter root access hosts}
+	For some scenarios you may encounter an issue, that prevents you from accessing the mysql interface from localhost.  Then you have to grant the root user access rights from any hosts (this is not really recommended, so don't do this in production or in any serious use case).\\
+	\begin{lstlisting}
+		CREATE USER 'root'@'%' IDENTIFIED BY 'password';
+		GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+	\end{lstlisting}
+
+\end{document}
