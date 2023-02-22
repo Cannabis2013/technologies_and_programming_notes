@@ -80,11 +80,34 @@
 	
 	\pagebreak
 	
-	\section{MySQL}
+	\section{SSH}
+	\subsection{Generate a key pair}
+	The simple command that uses \textit{rsa}:
+	\begin{lstlisting}
+		ssh-keygen
+	\end{lstlisting}
 	
-	\section{Vagrant}
+	For manual selection of algorithm and bit size:
+	
+	\begin{lstlisting}
+		ssh-keygen -t [rsa,dsa,ecdsa,ed25519,ed25519-sk] -b [size] -C "[email]" 
+	\end{lstlisting}
+
+	\note DSA and RSA is traditional algorithms previosly considered unbreakable  up until this quantum era. But in the near future
+	with the rise of quantum computers, this may change due to the way quantum computers works. GitHub now recommends at least using \textit{ecdsa}. But for student and testing purposes, \textit{rsa} will do just fine.
+	
+	\subsection{What is vagrant?}
+	
+	Vagrant may be called "Docker on steorids" as the container is not an image, but a box which contains a fully fletched virtual machine with OS and "ready to use" software. It relies on virtualization which means you have to have a hypervisor like VmWare or VirtualBox installed. A Vagrant box is a container which holds the VM and like docker images, can be pulled or pushed to an registry. This is ideal for developers that wants to ensure same environment across different platforms; just like docker, but on a larger scale. Here we not only talking a simple service, but a whole environment of services. The advantage here seems to be the total lack of "it works on my computer, but not on  yours" concerns, but the disadvantage is slow startup times and heavy disk space consumption. Furthermore, a Vagrant Box needs to be bounded to vm software like Virtual Box or VmWare.
+	
+	\subsection{Fire up vagrant}
+	
+	There are two ways to (as to my understanding) you can initialize a project to use vagrant.
 	
 	\section{Docker}
+	
+	\subsection{What is docker?}
+	Docker is a modern software tool within the category of software containerization. It takes many of the advantages of virtualization and leaves out disadvantages like slow start up time and heavy disk space consumption. Docker images relies on alpine versions of many modern operation systems which makes it ideal to containerize single services like small web servers and dbms.
 	
 	\subsection{Basic  operations}
 	Show running containers:
